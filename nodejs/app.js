@@ -32,3 +32,7 @@ app.post('/store', (req, res) => {
     conn.close()
     res.send("Data stored in SQLite3 database")
 })
+
+app.listen(3000, () => {
+    console.log("Server running on port 3000")
+})
