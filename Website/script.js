@@ -110,12 +110,12 @@ document.getElementById("pm1-average").textContent = pm1Average;
 document.getElementById("pm25-average").textContent = pm25Average;
 document.getElementById("pm10-average").textContent = pm10Average;
 */
-//fetch('http://local-ip-address/store', {
-//    method: 'POST',
-//    body: JSON.stringify(data),
-//    headers: { 'Content-Type': 'application/json' }
-//})
-//.then(res => res.json())
-//.then(response => console.log('Success:', response))
-//.catch(error => console.error('Error:', error)); 
+fetch('http://local-ip-address/store', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json' }
+})
+.then(res => res.json())
+.then(response => console.log('Success:', response))
+.catch(error => console.error('Error:', error)); 
 
