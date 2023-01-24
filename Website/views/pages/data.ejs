@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%-include('../partials/head'); %>
+  <title>Sensor Data</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+</head>
+<header>
+  <%-include('../partials/header'); %>
+</header>
+<body>
+    <canvas id="line-chart"></canvas>
+    <script>
+        let data = <%-JSON.stringify(data)%>
+        let time = data.map(d => d.time)
+        let temperature = data.map(d => d.temperature)
+        let pressure = data.map(d => d.pressure)
+        let humidity = data.map(d => d.humidity)
+        let light = data.map(d => d.light)
+        let oxidised = data.map(d => d.oxidised)
+        let reduced = data.map(d => d.reduced)
+        let nh3 = data.map(d => d.nh3)
+        let pm1 = data.map(d => d.pm1)
+        let pm25 = data.map(d => d.pm25)
+        let pm10 = data.map(d => d.pm10)
+    
+        let lineChart = new Chart(document.getElementById("line-chart"), {
+            type: 'line',
+            data: {
+                labels: time,
+                datasets: [{ 
+                    data: temperature,
+                    label: "Temperature",
+                    borderColor: "#3e95cd",
+                    fill: false
+                  }, { 
+                    data: pressure,
+                    label: "Pressure",
+                    borderColor: "#8e5ea2",
+                    fill: false
+                  }, { 
+                    data: humidity,
+                    label: "Humidity",
+                    borderColor: "#3cba9f",
+                    fill: false
+                  }, { 
+                    data: light,
+                    label: "Light",
+                    borderColor: "#e8c3b9",
+                    fill: false
+                  }, { 
+                    data: oxidised,
+                    label: "Oxidised",
+                    borderColor: "#c45850",
+                    fill: false
+                  }, { 
+                    data: reduced,
+                    label: "Reduced",
+                    borderColor: "#ffa600",
+                    fill: false
+                  }, { 
+                    data: nh3,
+                    label: "NH3",
+                    borderColor: "#2b908f",
+                    fill: false
+                  }, { 
+                    data: pm1,
+                    label: "PM1",
+                    borderColor: "#f9a3a4",
+                    fill: false
+                  }, { 
+                    data: pm25,
+                    label: "PM2.5",
+                    borderColor: "#f9b5a4",
+                    fill: false
+                  },{ 
+                    data: pm10,
+                    label: "PM10",
+                    borderColor: "#a3d3a4",
+                    fill: false
+                  }]}});
+                  </script>
+  <footer>
+    <%- include('../partials/footer'); %>
+  </footer>
+</body>
+</html>
