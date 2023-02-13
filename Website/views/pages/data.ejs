@@ -136,9 +136,45 @@
       pm10Input.classList.toggle('d-none');
     });
   </script>
-  
-  
-    <canvas id="line-chart"></canvas>
+
+<div class="row">
+  <div class="col-md-6">
+    <canvas id="temperature-chart"></canvas>
+  </div>
+  <div class="col-md-6">
+    <canvas id="pressure-chart"></canvas>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <canvas id="humidity-chart"></canvas>
+  </div>
+  <div class="col-md-6">
+    <canvas id="light-chart"></canvas>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <canvas id="oxidised-chart"></canvas>
+  </div>
+  <div class="col-md-6">
+    <canvas id="reduced-chart"></canvas>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <canvas id="nh3-chart"></canvas>
+  </div>
+  <div class="col-md-6">
+    <canvas id="pm1-chart"></canvas>
+  </div>
+  <div class="col-md-6">
+    <canvas id="pm25-chart"></canvas>
+  </div>
+  <div class="col-md-6">
+    <canvas id="pm10-chart"></canvas>
+  </div>
+</div>
     <script>
         let data = <%-JSON.stringify(data)%>
         let time = data.map(d => d.time)
@@ -153,61 +189,110 @@
         let pm25 = data.map(d => d.pm25)
         let pm10 = data.map(d => d.pm10)
     
-        let lineChart = new Chart(document.getElementById("line-chart"), {
-            type: 'line',
+        let temperatureChart = new Chart(document.getElementById("temperature-chart"), {
+          type: 'line',
             data: {
-                labels: time,
-                datasets: [{ 
-                    data: temperature,
-                    label: "Temperature",
-                    borderColor: "#3e95cd",
-                    fill: false
-                  }, { 
-                    data: pressure,
-                    label: "Pressure",
-                    borderColor: "#8e5ea2",
-                    fill: false
-                  }, { 
-                    data: humidity,
-                    label: "Humidity",
-                    borderColor: "#3cba9f",
-                    fill: false
-                  }, { 
-                    data: light,
-                    label: "Light",
-                    borderColor: "#e8c3b9",
-                    fill: false
-                  }, { 
-                    data: oxidised,
-                    label: "Oxidised",
-                    borderColor: "#c45850",
-                    fill: false
-                  }, { 
-                    data: reduced,
-                    label: "Reduced",
-                    borderColor: "#ffa600",
-                    fill: false
-                  }, { 
-                    data: nh3,
-                    label: "NH3",
-                    borderColor: "#2b908f",
-                    fill: false
-                  }, { 
-                    data: pm1,
-                    label: "PM1",
-                    borderColor: "#f9a3a4",
-                    fill: false
-                  }, { 
-                    data: pm25,
-                    label: "PM2.5",
-                    borderColor: "#f9b5a4",
-                    fill: false
-                  },{ 
-                    data: pm10,
-                    label: "PM10",
-                    borderColor: "#a3d3a4",
-                    fill: false
-                  }]}});
+            labels: time,
+          datasets: [{ 
+            data: temperature,
+            label: "Temperature",
+            borderColor: "#68ff00 ",
+            fill: true
+          }]}});
+          
+        let pressureChart = new Chart(document.getElementById("pressure-chart"), {
+          type: 'line',
+            data: {
+            labels: time,
+          datasets: [{ 
+            data: pressure,
+            label: "Pressure",
+            borderColor: "#00ffb9",
+            fill: true
+          }]}});
+          
+        let humidityChart = new Chart(document.getElementById("humidity-chart"), {
+          type: 'line',
+            data: {
+            labels: time,
+          datasets: [{ 
+            data: humidity,
+            label: "Humidity",
+            borderColor: "#0049ff",
+            fill: true
+          }]}});
+          
+        let lightChart = new Chart(document.getElementById("light-chart"), {
+          type: 'line',
+            data: {
+            labels: time,
+          datasets: [{ 
+            data: light,
+            label: "Light",
+            borderColor: "#f300ff",
+            fill: true
+          }]}});
+          
+        let oxidisedChart = new Chart(document.getElementById("oxidised-chart"), {
+          type: 'line',
+            data: {
+            labels: time,
+          datasets: [{ 
+            data: oxidised,
+            label: "Nitrogen Dioxide",
+            borderColor: "#ff0093 ",
+            fill: true
+          }]}});
+        let reducedChart = new Chart(document.getElementById("reduced-chart"), {
+          type: 'line',
+            data: {
+            labels: time,
+          datasets: [{ 
+            data: reduced,
+            label: "Cardbon Monoxide",
+            borderColor: "#f0ff00 ",
+            fill: true
+          }]}});
+        let nh3Chart = new Chart(document.getElementById("nh3-chart"), {
+          type: 'line',
+            data: {
+            labels: time,
+          datasets: [{ 
+            data: nh3,
+            label: "Ammonia",
+            borderColor: "#280092 ",
+            fill: true
+          }]}});
+        let pm1Chart = new Chart(document.getElementById("pm1-chart"), {
+          type: 'line',
+            data: {
+            labels: time,
+          datasets: [{ 
+            data: pm1,
+            label: "PM1",
+            borderColor: "#000000",
+            fill: true
+          }]}});
+          let pm25Chart = new Chart(document.getElementById("pm25-chart"), {
+          type: 'line',
+            data: {
+            labels: time,
+          datasets: [{ 
+            data: pm25,
+            label: "PM25",
+            borderColor: "#64a6c9 ",
+            fill: true
+          }]}});
+          let pm10Chart = new Chart(document.getElementById("pm10-chart"), {
+          type: 'line',
+            data: {
+            labels: time,
+          datasets: [{ 
+            data: pm10,
+            label: "PM10",
+            borderColor: "#c14c8a ",
+            fill: true
+          }]}});
                   </script>
   <footer>
     <%- include('../partials/footer'); %>
