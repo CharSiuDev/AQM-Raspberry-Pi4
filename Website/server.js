@@ -203,6 +203,37 @@ app.post('/create-notification', (req, res) => {
   conn.close();
 });
 
+app.get('/export', (req, res) => {
+  if (!req.session.username) {
+    res.status(401).send('Unauthorized');
+    return;
+  }
+
+  let tableName = 'sensor_data_1';
+  let conn = new sqlite3.Database('data.db');
+
+  conn.all(`SELECT * FROM ${tableName}`, (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Error exporting data');
+      return;
+    }
+
+    // Build a CSV string from the rows
+    let csv = 'time,temperature,pressure,humidity,light,oxidised,reduced,nh3,pm1,pm25,pm10\n';
+    for (let row of rows) {
+      csv += `${row.time},${row.temperature},${row.pressure},${row.humidity},${row.light},${row.oxidised},${row.reduced},${row.nh3},${row.pm1},${row.pm25},${row.pm10}\n`;
+    }
+
+    // Send the CSV file to the client for download
+    res.setHeader('Content-disposition', 'attachment; filename=sensor_data.csv');
+    res.setHeader('Content-type', 'text/csv');
+    res.status(200).send(csv);
+  });
+
+  conn.close();
+});
+
 app.post('/store', (req, res) => {
   let data = req.body;
   let tableName = `sensor_data_1`;
