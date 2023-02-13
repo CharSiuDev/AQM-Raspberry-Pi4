@@ -190,11 +190,65 @@
         let pm10 = data.map(d => d.pm10)
         let redLineData = {
           x: 0,
-          y: 700,
+          y: 35,
           // end of the line
           x2: time[time.length-1],
-          y2: 700,
+          y2: 35,
           borderColor: "red",
+          borderWidth: 2
+        };
+        let NitroLine = {
+          x: 0,
+          y: 40,
+          // end of the line
+          x2: time[time.length-1],
+          y2: 40,
+          borderColor: "orange",
+          borderWidth: 2
+        };
+        let COLine = {
+          x: 0,
+          y: 1000,
+          // end of the line
+          x2: time[time.length-1],
+          y2: 1000,
+          borderColor: "red",
+          borderWidth: 2
+        };
+        let AmmLine = {
+          x: 0,
+          y: 400,
+          // end of the line
+          x2: time[time.length-1],
+          y2: 400,
+          borderColor: "red",
+          borderWidth: 2
+        };
+        let Pm1Line = {
+          x: 0,
+          y: 10,
+          // end of the line
+          x2: time[time.length-1],
+          y2: 10,
+          borderColor: "orange",
+          borderWidth: 2
+        };
+        let Pm10Line = {
+          x: 0,
+          y: 14,
+          // end of the line
+          x2: time[time.length-1],
+          y2: 14,
+          borderColor: "orange",
+          borderWidth: 2
+        };
+        let Pm25Line = {
+          x: 0,
+          y: 15,
+          // end of the line
+          x2: time[time.length-1],
+          y2: 15,
+          borderColor: "orange",
           borderWidth: 2
         };
     
@@ -207,25 +261,20 @@
             label: "Temperature",
             borderColor: "#68ff00 ",
             fill: true
-          }]
-            },
-          options: {
-            annotations: [{
-              type: 'line',
-              mode: 'horizontal',
-              scaleID: 'y-axis-0',
-              value: 10,
-              borderColor: 'red',
-              borderWidth: 20,
-              label: {
-                content: '10',
-                enabled: false,
-                position: 'right'
-              }
-            }]
-          }
-
-        });
+          },
+          {
+            data: [
+              { x: redLineData.x, y: redLineData.y },
+              { x: redLineData.x2, y: redLineData.y2 }
+            ],
+            borderColor: redLineData.borderColor,
+            borderWidth: redLineData.borderWidth,
+            pointRadius: 0,
+            label: "Too Hot",
+            fill: false,
+            lineTension: 15,
+            type: 'line'
+          }]}});
           
         let pressureChart = new Chart(document.getElementById("pressure-chart"), {
           type: 'line',
@@ -236,19 +285,6 @@
             label: "Pressure",
             borderColor: "#00ffb9",
             fill: true
-          },
-          {
-            data: [
-              { x: redLineData.x, y: redLineData.y },
-              { x: redLineData.x2, y: redLineData.y2 }
-            ],
-            borderColor: redLineData.borderColor,
-            borderWidth: redLineData.borderWidth,
-            pointRadius: 0,
-            label: time.length,
-            fill: false,
-            lineTension: 15,
-            type: 'line'
           }]}});
           
         let humidityChart = new Chart(document.getElementById("humidity-chart"), {
@@ -282,6 +318,19 @@
             label: "Nitrogen Dioxide",
             borderColor: "#ff0093 ",
             fill: true
+          },
+          {
+            data: [
+              { x: NitroLine.x, y: NitroLine.y },
+              { x: NitroLine.x2, y: NitroLine.y2 }
+            ],
+            borderColor: NitroLine.borderColor,
+            borderWidth: NitroLine.borderWidth,
+            pointRadius: 0,
+            label: "Caution",
+            fill: false,
+            lineTension: 15,
+            type: 'line'
           }]}});
         let reducedChart = new Chart(document.getElementById("reduced-chart"), {
           type: 'line',
@@ -292,6 +341,19 @@
             label: "Cardbon Monoxide",
             borderColor: "#f0ff00 ",
             fill: true
+          },
+          {
+            data: [
+              { x: COLine.x, y: COLine.y },
+              { x: COLine.x2, y: COLine.y2 }
+            ],
+            borderColor: COLine.borderColor,
+            borderWidth: COLine.borderWidth,
+            pointRadius: 0,
+            label: "Danger",
+            fill: false,
+            lineTension: 15,
+            type: 'line'
           }]}});
         let nh3Chart = new Chart(document.getElementById("nh3-chart"), {
           type: 'line',
@@ -302,6 +364,19 @@
             label: "Ammonia",
             borderColor: "#280092 ",
             fill: true
+          },
+          {
+            data: [
+              { x: AmmLine.x, y: AmmLine.y },
+              { x: AmmLine.x2, y: AmmLine.y2 }
+            ],
+            borderColor: AmmLine.borderColor,
+            borderWidth: AmmLine.borderWidth,
+            pointRadius: 0,
+            label: "Danger",
+            fill: false,
+            lineTension: 15,
+            type: 'line'
           }]}});
         let pm1Chart = new Chart(document.getElementById("pm1-chart"), {
           type: 'line',
@@ -312,6 +387,19 @@
             label: "PM1",
             borderColor: "#000000",
             fill: true
+          },
+          {
+            data: [
+              { x: Pm1Line.x, y: Pm1Line.y },
+              { x: Pm1Line.x2, y: Pm1Line.y2 }
+            ],
+            borderColor: Pm1Line.borderColor,
+            borderWidth: Pm1Line.borderWidth,
+            pointRadius: 0,
+            label: "Harmful",
+            fill: false,
+            lineTension: 15,
+            type: 'line'
           }]}});
           let pm25Chart = new Chart(document.getElementById("pm25-chart"), {
           type: 'line',
@@ -322,6 +410,19 @@
             label: "PM25",
             borderColor: "#64a6c9 ",
             fill: true
+          },
+          {
+            data: [
+              { x: Pm25Line.x, y: Pm25Line.y },
+              { x: Pm25Line.x2, y: Pm25Line.y2 }
+            ],
+            borderColor: Pm25Line.borderColor,
+            borderWidth: Pm25Line.borderWidth,
+            pointRadius: 0,
+            label: "Harmful",
+            fill: false,
+            lineTension: 15,
+            type: 'line'
           }]}});
           let pm10Chart = new Chart(document.getElementById("pm10-chart"), {
           type: 'line',
@@ -332,6 +433,19 @@
             label: "PM10",
             borderColor: "#c14c8a ",
             fill: true
+          },
+          {
+            data: [
+              { x: Pm10Line.x, y: Pm10Line.y },
+              { x: Pm10Line.x2, y: Pm10Line.y2 }
+            ],
+            borderColor: Pm10Line.borderColor,
+            borderWidth: Pm10Line.borderWidth,
+            pointRadius: 0,
+            label: "Harmful",
+            fill: false,
+            lineTension: 15,
+            type: 'line'
           }]}});
                   </script>
   <footer>
