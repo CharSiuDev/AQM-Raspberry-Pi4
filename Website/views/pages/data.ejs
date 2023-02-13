@@ -188,6 +188,15 @@
         let pm1 = data.map(d => d.pm1)
         let pm25 = data.map(d => d.pm25)
         let pm10 = data.map(d => d.pm10)
+        let redLineData = {
+          x: 0,
+          y: 700,
+          // end of the line
+          x2: time[time.length-1],
+          y2: 700,
+          borderColor: "red",
+          borderWidth: 2
+        };
     
         let temperatureChart = new Chart(document.getElementById("temperature-chart"), {
           type: 'line',
@@ -198,7 +207,25 @@
             label: "Temperature",
             borderColor: "#68ff00 ",
             fill: true
-          }]}});
+          }]
+            },
+          options: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 10,
+              borderColor: 'red',
+              borderWidth: 20,
+              label: {
+                content: '10',
+                enabled: false,
+                position: 'right'
+              }
+            }]
+          }
+
+        });
           
         let pressureChart = new Chart(document.getElementById("pressure-chart"), {
           type: 'line',
@@ -209,6 +236,19 @@
             label: "Pressure",
             borderColor: "#00ffb9",
             fill: true
+          },
+          {
+            data: [
+              { x: redLineData.x, y: redLineData.y },
+              { x: redLineData.x2, y: redLineData.y2 }
+            ],
+            borderColor: redLineData.borderColor,
+            borderWidth: redLineData.borderWidth,
+            pointRadius: 0,
+            label: time.length,
+            fill: false,
+            lineTension: 15,
+            type: 'line'
           }]}});
           
         let humidityChart = new Chart(document.getElementById("humidity-chart"), {
