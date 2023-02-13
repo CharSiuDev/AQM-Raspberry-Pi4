@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Air Quality Monitor via Raspberry Pi</a>
-  <ul class="navbar-nav mr-auto">
+<nav class="navbar navbar-expand-lg navbar-light bg-custom">
+  <a class="navbar-brand text-right" href="/">Air Quality Monitor via Raspberry Pi</a>
+  <ul class="navbar-nav mr-auto text-right">
     <li class="nav-item">
       <a class="nav-link" href="/data">Sensor Data</a>
     </li>
@@ -21,3 +21,18 @@
     <% } %>
   </ul>
 </nav>
+
+<style>
+  .bg-custom {
+    background-color: #A44A3F;
+  }
+  .navbar-brand, .nav-link {
+  color: #FFFFFF;
+  }
+  .navbar-brand, .nav-link {
+  font-family: Arial, sans-serif;
+  }
+  .navbar-brand {
+  float: right;
+  }
+</style>
