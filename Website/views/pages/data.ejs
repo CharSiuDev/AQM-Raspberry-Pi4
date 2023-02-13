@@ -3,12 +3,141 @@
 <head>
   <%-include('../partials/head'); %>
   <title>Sensor Data</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 </head>
 <header>
   <%-include('../partials/header'); %>
 </header>
 <body>
+  <div class="modal fade" id="create-notification-modal" tabindex="-1" aria-labelledby="create-notification-modal-label" aria-hidden="true" data-bs-backdrop="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="create-notification-modal-label">Create Notification</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/create-notification" method="POST">
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="temperature-checkbox">
+              <label class="form-check-label" for="temperature-checkbox">Temperature</label>
+              <input type="number" class="form-control d-none" id="temperature-input" name="temperature">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="pressure-checkbox">
+              <label class="form-check-label" for="pressure-checkbox">Pressure</label>
+              <input type="number" class="form-control d-none" id="pressure-input" name="pressure">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="humidity-checkbox">
+              <label class="form-check-label" for="humidity-checkbox">Humidity</label>
+              <input type="number" class="form-control d-none" id="humidity-input" name="humidity">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="light-checkbox">
+              <label class="form-check-label" for="light-checkbox">Light</label>
+              <input type="number" class="form-control d-none" id="light-input" name="light">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="oxidised-checkbox">
+              <label class="form-check-label" for="oxidised-checkbox">Oxidised</label>
+              <input type="number" class="form-control d-none" id="oxidised-input" name="oxidised">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="reduced-checkbox">
+              <label class="form-check-label" for="reduced-checkbox">Reduced</label>
+              <input type="number" class="form-control d-none" id="reduced-input" name="reduced">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="nh3-checkbox">
+              <label class="form-check-label" for="nh3-checkbox">NH3</label>
+              <input type="number" class="form-control d-none" id="nh3-input" name="nh3">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="pm1-checkbox">
+              <label class="form-check-label" for="pm1-checkbox">PM 1</label>
+              <input type="number" class="form-control d-none" id="pm1-input" name="pm1">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="pm25-checkbox">
+              <label class="form-check-label" for="pm25-checkbox">PM 2.5</label>
+              <input type="number" class="form-control d-none" id="pm25-input" name="pm25">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="pm10-checkbox">
+              <label class="form-check-label" for="pm10-checkbox">PM 10</label>
+              <input type="number" class="form-control d-none" id="pm10-input" name="pm10">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const temperatureCheckbox = document.querySelector('#temperature-checkbox');
+    const temperatureInput = document.querySelector('#temperature-input');
+    temperatureCheckbox.addEventListener('change', () => {
+      temperatureInput.classList.toggle('d-none');
+    });
+  
+    const pressureCheckbox = document.querySelector('#pressure-checkbox');
+    const pressureInput = document.querySelector('#pressure-input');
+    pressureCheckbox.addEventListener('change', () => {
+      pressureInput.classList.toggle('d-none');
+    });
+  
+    const humidityCheckbox = document.querySelector('#humidity-checkbox');
+    const humidityInput = document.querySelector('#humidity-input');
+    humidityCheckbox.addEventListener('change', () => {
+      humidityInput.classList.toggle('d-none');
+    });
+
+    const lightCheckbox = document.querySelector('#light-checkbox');
+    const lightInput = document.querySelector('#light-input');
+    lightCheckbox.addEventListener('change', () => {
+      lightInput.classList.toggle('d-none');
+    });
+
+    const oxidisedCheckbox = document.querySelector('#oxidised-checkbox');
+    const oxidisedInput = document.querySelector('#oxidised-input');
+    oxidisedCheckbox.addEventListener('change', () => {
+      oxidisedInput.classList.toggle('d-none');
+    });
+
+    const reducedCheckbox = document.querySelector('#reduced-checkbox');
+    const reducedInput = document.querySelector('#reduced-input');
+    reducedCheckbox.addEventListener('change', () => {
+      reducedInput.classList.toggle('d-none');
+    });
+
+    const nh3Checkbox = document.querySelector('#nh3-checkbox');
+    const nh3Input = document.querySelector('#nh3-input');
+    nh3Checkbox.addEventListener('change', () => {
+      nh3Input.classList.toggle('d-none');
+    });
+
+    const pm1Checkbox = document.querySelector('#pm1-checkbox');
+    const pm1Input = document.querySelector('#pm1-input');
+    pm1Checkbox.addEventListener('change', () => {
+      pm1Input.classList.toggle('d-none');
+    });
+    
+    const pm25Checkbox = document.querySelector('#pm25-checkbox');
+    const pm25Input = document.querySelector('#pm25-input');
+    pm25Checkbox.addEventListener('change', () => {
+      pm25Input.classList.toggle('d-none');
+    });
+
+    const pm10Checkbox = document.querySelector('#pm10-checkbox');
+    const pm10Input = document.querySelector('#pm10-input');
+    pm10Checkbox.addEventListener('change', () => {
+      pm10Input.classList.toggle('d-none');
+    });
+  </script>
+  
+  
     <canvas id="line-chart"></canvas>
     <script>
         let data = <%-JSON.stringify(data)%>
@@ -83,5 +212,12 @@
   <footer>
     <%- include('../partials/footer'); %>
   </footer>
+  <script>
+    const createNotificationButton = document.querySelector('#create-notification-button');
+    const createNotificationModal = new bootstrap.Modal(document.querySelector('#create-notification-modal'));
+    createNotificationButton.addEventListener('click', () => {
+    createNotificationModal.show();
+});
+  </script>
 </body>
 </html>
