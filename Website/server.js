@@ -90,6 +90,61 @@ app.post('/register', (req, res) => {
   });
 });
 
+// Admin registration page
+app.get('/admin-register', function(req, res) {
+  if (req.session.username) {
+    res.render('pages/admin-register', {loggedIn: true});
+  } else {
+    res.render('pages/admin-register', {loggedIn: false});
+  }
+});
+
+app.post('/admin-register', function(req, res) {
+  let username = req.body.username;
+  let password = req.body.password;
+  let email = req.body.email;
+  let code = req.body.code;
+
+  // Check that the registration code is correct
+  if (code !== process.env.ADMIN_REGISTRATION_CODE) {
+    return res.status(400).send('Invalid registration code');
+  }
+
+  // Check that the username is unique
+  let conn = new sqlite3.Database('data.db');
+  let sql = 'SELECT COUNT(*) AS count FROM admin_users WHERE username = ?';
+  conn.get(sql, [username], function(err, row) {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error checking username');
+    }
+
+    if (row.count > 0) {
+      return res.status(400).send('Username already exists');
+    }
+
+    // Hash the password
+    bcrypt.hash(password, 10, function(err, hash) {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Error encrypting password');
+      }
+
+      // Insert the new admin user into the database
+      let sql = 'INSERT INTO admin_users (username, password, email) VALUES (?, ?, ?)';
+      conn.run(sql, [username, hash, email], function(err) {
+        if (err) {
+          console.error(err);
+          return res.status(500).send('Error registering user');
+        }
+
+        // Redirect to the login page
+        res.redirect('/login');
+      });
+    });
+  });
+});
+
 app.get('/login', (req, res) => {
     if (req.session.username) {
         res.render('pages/login', {loggedIn: true});
@@ -99,41 +154,75 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    let username = req.body.username;
-    let password = req.body.password;
-  
-    // Retrieve the encrypted password from the database
-    let conn = new sqlite3.Database('data.db');
-    let sql = `SELECT email, password FROM users WHERE username = ?`;
-    conn.get(sql, [username], (err, row) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  let email = req.body.email;
+  // Check if the user is an admin
+  let conn = new sqlite3.Database('data.db');
+  let sql = `SELECT * FROM admin_users WHERE username = ?`;
+  conn.get(sql, [username], (err, row) => {
       if (err) {
-        console.error(err);
-        res.status(500).send('Error retrieving user');
+          console.error(err);
+          res.status(500).send('Error retrieving user');
+          return;
       }
       if (!row) {
-        res.status(401).send('User not found');
-        return;
-      }
-      let hash = row.password;
-      let email = row.email;
+          // If the user is not an admin, check if they are a regular user
+          sql = `SELECT email, password FROM users WHERE username = ?`;
+          conn.get(sql, [username], (err, row) => {
+              if (err) {
+                  console.error(err);
+                  res.status(500).send('Error retrieving user');
+                  return;
+              }
+              if (!row) {
+                  res.status(401).send('User not found');
+                  return;
+              }
+              let hash = row.password;
+              let email = row.email;
 
-      // Compare the provided password with the encrypted password
-      bcrypt.compare(password, hash, (err, result) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send('Error checking password');
-        }
-        if (result) {
-          // Store the username and email in a session
-          req.session.username = username;
-          req.session.email = email;
-          res.redirect('/');
-        } else {
-          res.status(401).send('Incorrect password');
-        }
-      });
-    });
-    conn.close();
+              // Compare the provided password with the encrypted password
+              bcrypt.compare(password, hash, (err, result) => {
+                  if (err) {
+                      console.error(err);
+                      res.status(500).send('Error checking password');
+                      return;
+                  }
+                  if (result) {
+                      // Store the username, email, and admin flag in a session
+                      req.session.username = username;
+                      req.session.email = email;
+                      req.session.isAdmin = false;
+                      res.redirect('/');
+                  } else {
+                      res.status(401).send('Incorrect password');
+                  }
+              });
+          });
+      } else {
+          let hash = row.password;
+
+          // Compare the provided password with the encrypted password
+          bcrypt.compare(password, hash, (err, result) => {
+              if (err) {
+                  console.error(err);
+                  res.status(500).send('Error checking password');
+                  return;
+              }
+              if (result) {
+                  // Store the username and admin flag in a session
+                  req.session.username = username;
+                  req.session.email = email;
+                  req.session.isAdmin = true;
+                  res.redirect('/');
+              } else {
+                  res.status(401).send('Incorrect password');
+              }
+          });
+      }
+      conn.close();
+  });
 });
 
 app.get('/logout', (req, res) => {
