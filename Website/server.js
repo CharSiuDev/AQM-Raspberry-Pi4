@@ -42,7 +42,13 @@ app.use(session({
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
-    if (req.session.username) {
+  if (req.session.username && req.session.isAdmin) {
+    res.render('pages/index', { 
+      loggedIn: true,
+      isAdmin: true
+    });
+  }
+    else if (req.session.username) {
       res.render('pages/index', {loggedIn: true});
     } else {
       res.render('pages/index', {loggedIn: false});
