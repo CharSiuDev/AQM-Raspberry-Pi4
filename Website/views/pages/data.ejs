@@ -17,6 +17,12 @@
         </div>
         <div class="modal-body">
           <form action="/create-notification" method="POST">
+            <div class="mb-3">
+              <label for="table-name-select" class="form-label">Select Table</label>
+              <select class="form-select" id="table-name-select" name="tableName">
+                <option value="">-- Select Table --</option>
+              </select>
+            </div>
             <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input" id="temperature-checkbox">
               <label class="form-check-label" for="temperature-checkbox">Temperature</label>
@@ -74,8 +80,27 @@
       </div>
     </div>
   </div>
+  <script>
+    // Populate the dropdown menu with the list of sensor data tables
+    $.getJSON('/sensor-data-tables', function(sensorDataTables) {
+      $.each(sensorDataTables, function(index, tableName) {
+        $('#table-name-select').append($('<option>', {
+          value: tableName,
+          text: tableName
+        }));
+      });
+    });
+  </script>
   
   <script>
+
+    const tableSelect = document.querySelector('#table-name-select');
+    tableSelect.addEventListener('change', () => {
+    const selectedValue = tableSelect.value;
+    const form = document.querySelector('form');
+    form.action = '/create-notification?tableName=' + selectedValue;
+  });
+
     const temperatureCheckbox = document.querySelector('#temperature-checkbox');
     const temperatureInput = document.querySelector('#temperature-input');
     temperatureCheckbox.addEventListener('change', () => {

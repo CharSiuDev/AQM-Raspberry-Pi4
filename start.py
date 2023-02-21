@@ -2,6 +2,7 @@
 import json
 import requests
 import time
+import math
 from datetime import datetime
 import colorsys
 import sys
@@ -20,13 +21,16 @@ bme280 = BME280()
 # PMS5003 particulate sensor
 pms5003 = PMS5003()
 
+
+nodeName = "sensor_data_2"
+
 def get_cpu_temp():
     with open("/sys/class/thermal/thermal_zone0/temp", "r") as f:
         temp = f.read()
         temp = int(temp) / 1000.0
     return temp
 
-factor = 2.25
+factor = 0.7
 cpu_temps = [get_cpu_temp()] * 5
 delay = 0.5
 last_page = 0
@@ -57,19 +61,19 @@ def get_light(proximity):
             return light_data
 
 def get_oxidised():
-        data = gas.read_all()
-        oxidised_data = round(data.oxidising / 1000,2)
-        return oxidised_data
+        data = gas.read_oxidising()
+        oxi_ppm = round(math.pow(10, math.log10(data/7310)+0.64),2)
+        return oxi_ppm
 
 def get_reduced():
-        data = gas.read_all()
-        reduced_data = round(data.reducing / 1000,2)
-        return reduced_data
+        data = gas.read_reducing()
+        red_ppm = round(math.pow(10, -1.25 * math.log10(data/741410) - 0.8129),2)
+        return red_ppm
 
 def get_nh3():
-        data = gas.read_all()
-        nh3_data = round(data.nh3 / 1000,2)
-        return nh3_data
+        data = gas.read_nh3()
+        nh3_ppm = round(math.pow(10, -1.8 * math.log10(data/311760) - 0.163),2)
+        return nh3_ppm
 
 def get_pm1():
         data = pms5003.read()
@@ -105,6 +109,7 @@ try:
         print(currtime)
 
         data = {
+         "nodeName": nodeName,
          "time": currtime,
          "temperature": temperature_data,
          "pressure": pressure_data,
