@@ -8,6 +8,21 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@0.5.7/chartjs-plugin-annotation.min.js"></script>
+  <script>
+    window.onload = function() {
+      $(document).ready(function() {
+    // Add animation to all links that have a "href" attribute
+    $('a[href]').click(function(event) {
+      event.preventDefault();
+      var url = $(this).attr('href');
+      // Add your animation code here
+      $('body').fadeOut(500, function() {
+        window.location = url;
+      });
+    });
+    });
+    };
+  </script>
 <style>
   body { 
     padding-top:0px;

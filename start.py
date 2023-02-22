@@ -22,7 +22,7 @@ bme280 = BME280()
 pms5003 = PMS5003()
 
 
-nodeName = "sensor_data_2"
+nodeName = "sensor_data_1"
 
 def get_cpu_temp():
     with open("/sys/class/thermal/thermal_zone0/temp", "r") as f:
@@ -62,17 +62,17 @@ def get_light(proximity):
 
 def get_oxidised():
         data = gas.read_oxidising()
-        oxi_ppm = round(math.pow(10, math.log10(data/7310)+0.64),2)
+        oxi_ppm = round(math.pow(10, math.log10(data/38957)+0.64),2)
         return oxi_ppm
 
 def get_reduced():
         data = gas.read_reducing()
-        red_ppm = round(math.pow(10, -1.25 * math.log10(data/741410) - 0.8129),2)
+        red_ppm = round(math.pow(10, -1.25 * math.log10(data/598448) - 0.8129),2)
         return red_ppm
 
 def get_nh3():
         data = gas.read_nh3()
-        nh3_ppm = round(math.pow(10, -1.8 * math.log10(data/311760) - 0.163),2)
+        nh3_ppm = round(math.pow(10, -1.8 * math.log10(data/462191) - 0.163),2)
         return nh3_ppm
 
 def get_pm1():

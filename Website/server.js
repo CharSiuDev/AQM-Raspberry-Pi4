@@ -281,10 +281,18 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/about', function(req, res) {
-  if (req.session.username) {
-      res.render('pages/about', {loggedIn: true});
+  if (req.session.username && req.session.isAdmin) {
+      res.render('pages/about', {
+        loggedIn: true,
+        isAdmin: true});
+    } else if (req.session.username){
+      res.render('pages/about', {
+        loggedIn: true,
+        isAdmin: false}); 
     } else {
-      res.render('pages/about', {loggedIn: false});
+      res.render('pages/about', {
+        loggedIn: false,
+        isAdmin: false});
     }
 });
 
@@ -503,12 +511,15 @@ app.get('/sensor-data-tables', (req, res) => {
 app.post('/store', (req, res) => {
   let data = req.body;
   let nodeName = data.nodeName;
+  console.log(nodeName)
 
   // Store data in SQLite3 database
   let conn = new sqlite3.Database('data.db');
   conn.run(`CREATE TABLE IF NOT EXISTS ${nodeName} (time REAL, temperature REAL, pressure REAL, humidity REAL, light REAL, oxidised REAL, reduced REAL, nh3 REAL, pm1 REAL, pm25 REAL, pm10 REAL)`, (err) => {
     if (err) {
       console.log("error creating table")
+    }else {
+      console.log(`Table ${nodeName} created successfully`);
     }
   });
 
@@ -578,9 +589,9 @@ app.post('/store', (req, res) => {
     if (err) {
       console.error(err.message);
     }
-    if(rows[0].count > 20)
+    if(rows[0].count > 20){
     conn.run(`DELETE FROM ${nodeName} WHERE time = (SELECT time FROM ${nodeName} ORDER BY time LIMIT 1)`)
-});
+}});
 
 
   console.log(`Data stored in ${nodeName}`);
