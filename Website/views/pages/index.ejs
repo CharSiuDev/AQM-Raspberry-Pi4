@@ -5,13 +5,62 @@
   <title>Sensor Data</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <link rel="stylesheet" type="text/css" href="styles.css">
+  <style>
+    .bg-image {
+      background-image: url('/images/pi4keyboardbackground.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .btn-primary {
+      z-index: 1;
+    }
+
+    h1 {
+      font-weight: bold;
+      font-family: fantasy;
+    }
+
+    .image-box {
+      width: 30%;
+      margin-right: 5%;
+    }
+
+    .text-box {
+      width: 65%;
+    }
+  </style>
 </head>
 <header>
   <%- include('../partials/header'); %>
 </header>
 <body>
+  <div class="container-fluid p-0 bg-image">
+    <div class="text-white">
+      <h1 class="display-4">Air Quality Monitor via Raspberry Pi</h1>
+      <a href="/about" class="btn btn-primary btn-lg mt-3">Read more</a>
+    </div>
+  </div>
 
-  <footer>
+  <div class="container-fluid mt-5">
+    <div class="row">
+      <div class="col-md-4 image-box">
+        <img src="/images/image1.jpg" class="img-fluid rounded" alt="Image 1">
+      </div>
+      <div class="col-md-8 text-box">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec dolor ac nunc egestas fringilla. Maecenas pharetra purus eget nibh varius blandit. Donec tincidunt ante quis arcu accumsan bibendum. Praesent euismod, nunc in tempus vulputate, metus nisl blandit felis, sit amet sollicitudin orci turpis non libero.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center fixed-bottom">
     <%- include('../partials/footer'); %>
   </footer>
 </body>
