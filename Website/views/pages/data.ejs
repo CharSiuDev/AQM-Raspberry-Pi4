@@ -3,6 +3,8 @@
 <head>
   <%-include('../partials/head'); %>
   <title>Sensor Data</title>
+  <style>
+    </style>
 </head>
 <header>
   <%-include('../partials/header'); %>
@@ -163,43 +165,84 @@
   </script>
 
 <div class="row">
-  <div class="col-md-6">
-    <canvas id="temperature-chart"></canvas>
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card card-sm">
+      <div class="card-body">
+        <canvas id="temperature-chart"></canvas></canvas>
+      </div>
+    </div>
   </div>
-  <div class="col-md-6">
-    <canvas id="pressure-chart"></canvas>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6">
-    <canvas id="humidity-chart"></canvas>
-  </div>
-  <div class="col-md-6">
-    <canvas id="light-chart"></canvas>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6">
-    <canvas id="oxidised-chart"></canvas>
-  </div>
-  <div class="col-md-6">
-    <canvas id="reduced-chart"></canvas>
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card card-sm">
+      <div class="card-body">
+        <canvas id="pressure-chart"></canvas>
+      </div>
+    </div>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
-    <canvas id="nh3-chart"></canvas>
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card card-sm">
+      <div class="card-body">
+        <canvas id="humidity-chart"></canvas>
+      </div>
+    </div>
   </div>
-  <div class="col-md-6">
-    <canvas id="pm1-chart"></canvas>
-  </div>
-  <div class="col-md-6">
-    <canvas id="pm25-chart"></canvas>
-  </div>
-  <div class="col-md-6">
-    <canvas id="pm10-chart"></canvas>
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <canvas id="light-chart"></canvas>
+      </div>
+    </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card card-sm">
+      <div class="card-body">
+        <canvas id="oxidised-chart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card card-sm">
+      <div class="card-body">
+        <canvas id="reduced-chart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card card-sm">
+      <div class="card-body">
+        <canvas id="nh3-chart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card card-sm">
+      <div class="card-body">
+        <canvas id="pm1-chart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card card-sm">
+      <div class="card-body">
+        <canvas id="pm25-chart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mx-auto px-4 mb-4">
+    <div class="card card-sm">
+      <div class="card-body">
+        <canvas id="pm10-chart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
     <script>
         let data = <%-JSON.stringify(data)%>
         let time = data.map(d => d.time)
@@ -517,6 +560,7 @@
     })
     .catch(error => console.error(error));
 }
+
 
 // Update the chart every 10 seconds
 setInterval(updateChart, 5000);
