@@ -6,10 +6,12 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 async function sendEmail(recipient, subject, body) {
   // create a nodemailer transporter using SMTP
   let transporter = nodemailer.createTransport({
@@ -41,8 +43,6 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }));
-
-app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
   if (req.session.username && req.session.isAdmin) {
@@ -601,5 +601,12 @@ app.post('/store', (req, res) => {
     }
     );
   })});
-app.listen(3000, () => {
-  console.log("Server running on port 3000")});
+  module.exports = {
+    sendEmail,
+    app
+  };
+const address = "192.198.0.59";
+const port = "3000";
+app.listen(port, () => {
+console.log("Server running on port 3000")
+console.log(`App is listening on ${address}:${port}`)});
