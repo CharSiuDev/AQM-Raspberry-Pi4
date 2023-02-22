@@ -90,47 +90,54 @@ def get_pm10():
         pm10_data = data.pm_ug_per_m3(10),
         return pm10_data
 
-starttime = time.time()
-try:
+def collect_data():
+    proximity = ltr559.get_proximity()
+    temperature_data = get_compensated_cpu_temp(cpu_temps)
+    pressure_data = getpressure()
+    humidity_data = get_humidity()
+    light_data = get_light(proximity)
+    oxidised_data = get_oxidised()
+    reduced_data = get_reduced()
+    nh3_data = get_nh3()
+    pm1_data = get_pm1()
+    pm25_data = get_pm25()
+    pm10_data = get_pm10()
+    currtime = datetime.now().strftime("%H:%M:%S")
+
+    data = {
+        "nodeName": nodeName,
+        "time": currtime,
+        "temperature": temperature_data,
+        "pressure": pressure_data,
+        "humidity": humidity_data,
+        "light": light_data,
+        "oxidised": oxidised_data,
+        "reduced": reduced_data,
+        "nh3": nh3_data,
+        "pm1": pm1_data,
+        "pm25": pm25_data,
+        "pm10": pm10_data
+    }
+
+    return data
+
+def send_data(data):
+    url = 'http://192.168.0.59:3000/store'
+    headers = {'Content-type': 'application/json'}
+    response = requests.post(url, data=json.dumps(data), headers=headers)
+    if response.status_code == 200:
+        print('Success')
+    else:
+        print('Error')
+
+def run():
     while True:
-        time.sleep(10.0 - ((time.time() - starttime) % 10.0))
-        proximity = ltr559.get_proximity()
-        temperature_data = get_compensated_cpu_temp(cpu_temps)
-        pressure_data = getpressure()
-        humidity_data = get_humidity()
-        light_data = get_light(proximity)
-        oxidised_data = get_oxidised()
-        reduced_data = get_reduced()
-        nh3_data = get_nh3()
-        pm1_data = get_pm1()
-        pm25_data = get_pm25()
-        pm10_data = get_pm10()
-        currtime = datetime.now().strftime("%H:%M:%S")
-        print(currtime)
+        data = collect_data()
+        send_data(data)
+        time.sleep(10)
 
-        data = {
-         "nodeName": nodeName,
-         "time": currtime,
-         "temperature": temperature_data,
-         "pressure": pressure_data,
-         "humidity": humidity_data,
-         "light": light_data,
-         "oxidised": oxidised_data,
-         "reduced": reduced_data,
-         "nh3": nh3_data,
-         "pm1": pm1_data,
-         "pm25": pm25_data,
-         "pm10": pm10_data}
-        
-        url = 'http://192.168.0.59:3000/store'
-        headers = {'Content-type': 'application/json'}
-        response = requests.post(url, data=json.dumps(data), headers = headers)
-        if response.status_code == 200:
-            print('Success')
-        else:
-            print('Error')
-
-
-# Exit cleanly
-except KeyboardInterrupt:
-    sys.exit(0)
+if __name__ == '__main__':
+    try:
+        run()
+    except KeyboardInterrupt:
+        sys.exit(0)
