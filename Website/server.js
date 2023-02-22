@@ -7,6 +7,9 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
 async function sendEmail(recipient, subject, body) {
   // create a nodemailer transporter using SMTP
   let transporter = nodemailer.createTransport({
@@ -146,6 +149,128 @@ app.post('/admin-register', function(req, res) {
     });
   });
 });
+
+app.get('/admin-dashboard', (req, res) => {
+  // Check if the user is logged in and is an admin
+  if (!req.session.username || !req.session.isAdmin) {
+    res.redirect('/login');
+    return;
+  }
+
+  // Get the list of sensor data tables from the database
+  let conn = new sqlite3.Database('data.db');
+  conn.all("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'sensor_data%'", (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Internal server error');
+      return;
+    }
+
+    const sensorDataTables = rows.map(row => row.name);
+
+    // Get the list of email notification tables from the database
+    conn.all("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'email_notifications%'", (err, rows) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send('Internal server error');
+        return;
+      }
+
+      const emailNotificationTables = rows.map(row => row.name);
+
+      // Render the admin dashboard template with the list of sensor data and email notification tables
+      res.render('pages/admin-dashboard.ejs', { sensorDataTables, emailNotificationTables, loggedIn: true, isAdmin: true});
+    });
+  });
+});
+
+// Define a route for deleting a sensor data table
+app.post('/delete-sensor-table', (req, res) => {
+  // Check if the user is logged in and is an admin
+  if (!req.session.username || !req.session.isAdmin) {
+    res.redirect('/login');
+    return;
+  }
+
+  // Get the name of the sensor data table to delete from the form data
+  const tableName = req.body.tableName;
+
+  // Connect to the database and delete the sensor data table
+  let conn = new sqlite3.Database('data.db');
+  conn.run(`DROP TABLE ${tableName}`, (err) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Internal server error');
+      return;
+    }
+
+    res.redirect('/admin-dashboard');
+  });
+});
+
+// Define a route for deleting email notifications from a table
+app.post('/delete-email-notifications', (req, res) => {
+  // Check if the user is logged in and is an admin
+  if (!req.session.username || !req.session.isAdmin) {
+    res.redirect('/login');
+    return;
+  }
+
+  // Get the name of the email notification table and the notification IDs to delete from the form data
+  const tableName = "email_notifications";
+  const notificationIds = req.body.notificationIds;
+
+  // Connect to the database and delete the email notifications from the table
+  let conn = new sqlite3.Database('data.db');
+  let sql = `DELETE FROM ${tableName} WHERE id IN (${notificationIds})`;
+  conn.run(sql, (err) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Internal server error');
+      return;
+    }
+
+    res.redirect('/admin-dashboard');
+  });
+});
+
+// Define a route for retrieving email notifications from a table
+app.post('/get-email-notifications', (req, res) => {
+  // Check if the user is logged in and is an admin
+  if (!req.session.username || !req.session.isAdmin) {
+    res.redirect('/login');
+    return;
+  }
+
+  // Get the name of the email notification table from the form data
+  const tableName = "email_notifications";
+
+  // Connect to the database and retrieve the email notifications from the table
+  let conn = new sqlite3.Database('data.db');
+  let sql = `SELECT id, email FROM ${tableName}`;
+  conn.all(sql, (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Internal server error');
+      return;
+    }
+
+    // Render the email notifications table rows as HTML and send the response
+    let tableRowsHtml = '';
+    for (let row of rows) {
+      tableRowsHtml += `
+        <tr>
+          <td><input type="checkbox" name="notificationIds[]" value="${row.id}"></td>
+          <td>${row.id}</td>
+          <td>${row.email}</td>
+        </tr>
+      `;
+    }
+
+    res.send(tableRowsHtml);
+  });
+});
+
 
 app.get('/login', (req, res) => {
     if (req.session.username) {
@@ -292,6 +417,22 @@ app.get('/data', (req, res) => {
     }
 });
 
+app.get('/chartUpdate', (req, res) => {
+  const tableName = req.query.tableName;
+  const conn = new sqlite3.Database('data.db');
+
+  conn.all(`SELECT * FROM ${tableName}`, (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).json({ error: 'Failed to fetch data from database.' });
+    } else {
+      res.json(rows);
+    }
+  });
+
+  conn.close();
+});
+
 app.post('/create-notification', (req, res) => {
   const notificationEmail = req.session.email;
   const { tableName, temperature, pressure, humidity, light, oxidised, reduced, nh3, pm1, pm25, pm10 } = req.body;
@@ -374,70 +515,63 @@ app.post('/store', (req, res) => {
   conn.run(`INSERT INTO ${nodeName} (time, temperature, pressure, humidity, light, oxidised, reduced, nh3, pm1, pm25, pm10) VALUES (?,?,?,?,?,?,?,?,?,?,?)`, [data.time, data.temperature, data.pressure, data.humidity, data.light, data.oxidised, data.reduced, data.nh3, data.pm1, data.pm25, data.pm10], (err) => {
     if (err) {
       console.log("error inserting data")
+      res.status(500).send('Internal server error');
+      return;
     }
-  });
-
-  conn.all(`SELECT * FROM email_notifications WHERE node_name = ?`, [nodeName], (err, rows) => {
-    if (err) {
-      console.error(err.message);
-    }
-
-    let notificationsToRemove = [];
-
-    rows.forEach((row) => {
-      let exceedData = [];
-
-      if (row.temperature && data.temperature > row.temperature) {
-        exceedData.push("Temperature");
-      }
-      if (row.pressure && data.pressure > row.pressure) {
-        exceedData.push("Pressure");
-      }
-      if (row.humidity && data.humidity > row.humidity) {
-        exceedData.push("Humidity");
-      }
-      if (row.light && data.light > row.light) {
-        exceedData.push("Light");
-      }
-      if (row.oxidised && data.oxidised > row.oxidised) {
-        exceedData.push("Oxidised");
-      }
-      if (row.reduced && data.reduced > row.reduced) {
-        exceedData.push("Reduced");
-      }
-      if (row.nh3 && data.nh3 > row.nh3) {
-        exceedData.push("NH3");
-      }
-      if (row.pm1 && data.pm1 > row.pm1) {
-        exceedData.push("PM1");
-      }
-      if (row.pm25 && data.pm25 > row.pm25) {
-        exceedData.push("PM25");
-      }
-      if (row.pm10 && data.pm10 > row.pm10) {
-        exceedData.push("PM10");
-      }
-
-      // If any data exceeds the threshold, send email
-      if (exceedData.length > 0) {
-        let email = row.email;
-        let subject = "Sensor Data Exceeds Threshold";
-        let message = `The following data exceeds the threshold:\n${exceedData.join(', ')}\n\nSensor data:\n${JSON.stringify(data, null, 2)}`;
-
-        sendEmail(email, subject, message);
-        notificationsToRemove.push(row.id);
-      }
-    });
-
-    // Remove the notification requests that have been sent
-    notificationsToRemove.forEach((id) => {
-      conn.run(`DELETE FROM email_notifications WHERE id = ?`, [id], (err) => {
+    conn.close(() => {
+      // Connection closed, data saved to database, now check for notifications
+      conn = new sqlite3.Database('data.db');
+      conn.all(`SELECT * FROM email_notifications WHERE node_name = ?`, [nodeName], (err, rows) => {
         if (err) {
           console.error(err.message);
         }
+
+        let notificationsToRemove = [];
+
+        rows.forEach((row) => {
+          let exceedData = [];
+
+          if (row.temperature && data.temperature > row.temperature) {
+            exceedData.push("Temperature");
+          }
+          if (row.pressure && data.pressure > row.pressure) {
+            exceedData.push("Pressure");
+          }
+          if (row.humidity && data.humidity > row.humidity) {
+            exceedData.push("Humidity");
+          }
+          if (row.light && data.light > row.light) {
+            exceedData.push("Light");
+          }
+          if (row.oxidised && data.oxidised > row.oxidised) {
+            exceedData.push("Oxidised");
+          }
+          if (row.reduced && data.reduced > row.reduced) {
+            exceedData.push("Reduced");
+          }
+          if (row.nh3 && data.nh3 > row.nh3) {
+            exceedData.push("NH3");
+          }
+          if (row.pm1 && data.pm1 > row.pm1) {
+            exceedData.push("PM1");
+          }
+          if (row.pm25 && data.pm25 > row.pm25) {
+            exceedData.push("PM25");
+          }
+          if (row.pm10 && data.pm10 > row.pm10) {
+            exceedData.push("PM10");
+          }
+
+          // If any data exceeds the threshold, send email
+          if (exceedData.length > 0) {
+            let email = row.email;
+            let subject = "Sensor Data Exceeds Threshold";
+            let message = `The following data exceeds the threshold:\n${exceedData.join(', ')}\n\nSensor data:\n${JSON.stringify(data, null, 2)}`;
+
+            sendEmail(email, subject, message);
+            notificationsToRemove.push(row.id);
+          }
       });
-    });
-  });
 
 
   conn.all(`SELECT count(*) as count FROM ${nodeName}`, (err,rows) => {
@@ -452,6 +586,9 @@ app.post('/store', (req, res) => {
   console.log(`Data stored in ${nodeName}`);
   conn.close();
   res.send("Data stored in SQLite3 database");
-});
+      });
+    }
+    );
+  })});
 app.listen(3000, () => {
   console.log("Server running on port 3000")});

@@ -213,93 +213,37 @@
         let pm1 = data.map(d => d.pm1)
         let pm25 = data.map(d => d.pm25)
         let pm10 = data.map(d => d.pm10)
-        let redLineData = {
-          x: 0,
-          y: 35,
-          // end of the line
-          x2: time[time.length-1],
-          y2: 35,
-          borderColor: "red",
-          borderWidth: 2
-        };
-        let NitroLine = {
-          x: 0,
-          y: 0.1,
-          // end of the line
-          x2: time[time.length-1],
-          y2: 0.1,
-          borderColor: "red",
-          borderWidth: 2
-        };
-        let COLine = {
-          x: 0,
-          y: 35,
-          // end of the line
-          x2: time[time.length-1],
-          y2: 35,
-          borderColor: "red",
-          borderWidth: 2
-        };
-        let AmmLine = {
-          x: 0,
-          y: 25,
-          // end of the line
-          x2: time[time.length-1],
-          y2: 25,
-          borderColor: "red",
-          borderWidth: 2
-        };
-        let Pm1Line = {
-          x: 0,
-          y: 25,
-          // end of the line
-          x2: time[time.length-1],
-          y2: 25,
-          borderColor: "orange",
-          borderWidth: 2
-        };
-        let Pm10Line = {
-          x: 0,
-          y: 50,
-          // end of the line
-          x2: time[time.length-1],
-          y2: 50,
-          borderColor: "orange",
-          borderWidth: 2
-        };
-        let Pm25Line = {
-          x: 0,
-          y: 25,
-          // end of the line
-          x2: time[time.length-1],
-          y2: 25,
-          borderColor: "orange",
-          borderWidth: 2
-        };
-    
+
         let temperatureChart = new Chart(document.getElementById("temperature-chart"), {
-          type: 'line',
-            data: {
-            labels: time,
+        type: 'line',
+        data: {
+          labels: time,
           datasets: [{ 
-            data: temperature,
-            label: "Temperature",
-            borderColor: "#68ff00 ",
-            fill: true
-          },
-          {
-            data: [
-              { x: redLineData.x, y: redLineData.y },
-              { x: redLineData.x2, y: redLineData.y2 }
-            ],
-            borderColor: redLineData.borderColor,
-            borderWidth: redLineData.borderWidth,
-            pointRadius: 0,
-            label: "Too Hot",
-            fill: false,
-            lineTension: 15,
-            type: 'line'
-          }]}});
+          data: temperature,
+          label: "Temperature",
+          borderColor: "#68ff00",
+          fill: true
+          }]
+        },
+        options: {
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 23,
+              borderColor: 'red',
+              borderWidth: 5,
+              label: {
+                enabled: true,
+                content: 'Uncomfortable',
+                yAdjust: 10
+                }
+              }]
+            }
+          }
+        });
+
           
         let pressureChart = new Chart(document.getElementById("pressure-chart"), {
           type: 'line',
@@ -344,19 +288,25 @@
             borderColor: "#ff0093 ",
             fill: true
           },
-          {
-            data: [
-              { x: NitroLine.x, y: NitroLine.y },
-              { x: NitroLine.x2, y: NitroLine.y2 }
-            ],
-            borderColor: NitroLine.borderColor,
-            borderWidth: NitroLine.borderWidth,
-            pointRadius: 0,
-            label: "Caution",
-            fill: false,
-            lineTension: 15,
-            type: 'line'
-          }]}});
+          ]},
+          options: {
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 20,
+              borderColor: 'red',
+              borderWidth: 5,
+              label: {
+                enabled: true,
+                content: 'Dangerous',
+                yAdjust: 10
+                }
+              }]
+            }
+          }
+        });
         let reducedChart = new Chart(document.getElementById("reduced-chart"), {
           type: 'line',
             data: {
@@ -367,19 +317,25 @@
             borderColor: "#f0ff00 ",
             fill: true
           },
-          {
-            data: [
-              { x: COLine.x, y: COLine.y },
-              { x: COLine.x2, y: COLine.y2 }
-            ],
-            borderColor: COLine.borderColor,
-            borderWidth: COLine.borderWidth,
-            pointRadius: 0,
-            label: "Danger",
-            fill: false,
-            lineTension: 15,
-            type: 'line'
-          }]}});
+          ]},
+          options: {
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 35,
+              borderColor: 'red',
+              borderWidth: 5,
+              label: {
+                enabled: true,
+                content: 'Dangerous',
+                yAdjust: 10
+                }
+              }]
+            }
+          }
+        });
         let nh3Chart = new Chart(document.getElementById("nh3-chart"), {
           type: 'line',
             data: {
@@ -390,19 +346,25 @@
             borderColor: "#280092 ",
             fill: true
           },
-          {
-            data: [
-              { x: AmmLine.x, y: AmmLine.y },
-              { x: AmmLine.x2, y: AmmLine.y2 }
-            ],
-            borderColor: AmmLine.borderColor,
-            borderWidth: AmmLine.borderWidth,
-            pointRadius: 0,
-            label: "Danger",
-            fill: false,
-            lineTension: 15,
-            type: 'line'
-          }]}});
+          ]},
+          options: {
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 25,
+              borderColor: 'red',
+              borderWidth: 5,
+              label: {
+                enabled: true,
+                content: 'Dangerous',
+                yAdjust: 10
+                }
+              }]
+            }
+          }
+        });
         let pm1Chart = new Chart(document.getElementById("pm1-chart"), {
           type: 'line',
             data: {
@@ -413,19 +375,25 @@
             borderColor: "#000000",
             fill: true
           },
-          {
-            data: [
-              { x: Pm1Line.x, y: Pm1Line.y },
-              { x: Pm1Line.x2, y: Pm1Line.y2 }
-            ],
-            borderColor: Pm1Line.borderColor,
-            borderWidth: Pm1Line.borderWidth,
-            pointRadius: 0,
-            label: "Harmful",
-            fill: false,
-            lineTension: 15,
-            type: 'line'
-          }]}});
+          ]},
+          options: {
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 25,
+              borderColor: 'red',
+              borderWidth: 5,
+              label: {
+                enabled: true,
+                content: 'Dangerous',
+                yAdjust: 10
+                }
+              }]
+            }
+          }
+        });
           let pm25Chart = new Chart(document.getElementById("pm25-chart"), {
           type: 'line',
             data: {
@@ -436,19 +404,24 @@
             borderColor: "#64a6c9 ",
             fill: true
           },
-          {
-            data: [
-              { x: Pm25Line.x, y: Pm25Line.y },
-              { x: Pm25Line.x2, y: Pm25Line.y2 }
-            ],
-            borderColor: Pm25Line.borderColor,
-            borderWidth: Pm25Line.borderWidth,
-            pointRadius: 0,
-            label: "Harmful",
-            fill: false,
-            lineTension: 15,
-            type: 'line'
-          }]}});
+          ]},options: {
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 25,
+              borderColor: 'red',
+              borderWidth: 5,
+              label: {
+                enabled: true,
+                content: 'Dangerous',
+                yAdjust: 10
+                }
+              }]
+            }
+          }
+        });
           let pm10Chart = new Chart(document.getElementById("pm10-chart"), {
           type: 'line',
             data: {
@@ -459,19 +432,94 @@
             borderColor: "#c14c8a ",
             fill: true
           },
-          {
-            data: [
-              { x: Pm10Line.x, y: Pm10Line.y },
-              { x: Pm10Line.x2, y: Pm10Line.y2 }
-            ],
-            borderColor: Pm10Line.borderColor,
-            borderWidth: Pm10Line.borderWidth,
-            pointRadius: 0,
-            label: "Harmful",
-            fill: false,
-            lineTension: 15,
-            type: 'line'
-          }]}});
+          ]},
+          options: {
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 50,
+              borderColor: 'red',
+              borderWidth: 5,
+              label: {
+                enabled: true,
+                content: 'Dangerous',
+                yAdjust: 10
+                }
+              }]
+            }
+          }
+        });
+                  </script>
+      <script>
+        function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      }
+
+      function updateChart() {
+      const tableName = getParameterByName('tableName');
+      if (!tableName) {
+      console.error('tableName is missing from URL');
+      return;
+    }
+  // Fetch new data from the server
+  fetch('/chartUpdate?tableName='+ tableName)
+    .then(response => response.json())
+    .then(data => {
+      // Update the chart with the new data
+      temperatureChart.data.labels = data.map(d => d.time);
+      temperatureChart.data.datasets[0].data = data.map(d => d.temperature);
+
+      pressureChart.data.labels = data.map(d => d.time);
+      pressureChart.data.datasets[0].data = data.map(d => d.pressure);
+
+      humidityChart.data.labels = data.map(d => d.time);
+      humidityChart.data.datasets[0].data = data.map(d => d.humidity);
+
+      lightChart.data.labels = data.map(d => d.time);
+      lightChart.data.datasets[0].data = data.map(d => d.light);
+
+      oxidisedChart.data.labels = data.map(d => d.time);
+      oxidisedChart.data.datasets[0].data = data.map(d => d.oxidised);
+
+      reducedChart.data.labels = data.map(d => d.time);
+      reducedChart.data.datasets[0].data = data.map(d => d.reduced);
+
+      nh3Chart.data.labels = data.map(d => d.time);
+      nh3Chart.data.datasets[0].data = data.map(d => d.nh3);
+
+      pm1Chart.data.labels = data.map(d => d.time);
+      pm1Chart.data.datasets[0].data = data.map(d => d.pm1);
+
+      pm25Chart.data.labels = data.map(d => d.time);
+      pm25Chart.data.datasets[0].data = data.map(d => d.pm25);
+
+      pm10Chart.data.labels = data.map(d => d.time);
+      pm10Chart.data.datasets[0].data = data.map(d => d.pm10);
+
+      temperatureChart.update();
+      pressureChart.update();
+      humidityChart.update();
+      lightChart.update();
+      oxidisedChart.update();
+      reducedChart.update();
+      nh3Chart.update();
+      pm1Chart.update();
+      pm25Chart.update();
+      pm10Chart.update();
+    })
+    .catch(error => console.error(error));
+}
+
+// Update the chart every 10 seconds
+setInterval(updateChart, 5000);
                   </script>
   <footer>
     <%- include('../partials/footer'); %>
