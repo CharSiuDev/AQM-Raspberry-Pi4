@@ -1,4 +1,3 @@
-
 <html>
   <head>
     <title>About</title>
@@ -8,74 +7,82 @@
     <%- include('../partials/header'); %>
   </header>
   <body>
-    <div class="row">
-      <div class="col-sm-6">
-        <h2>Sensor Data Tables</h2>
-        <% if (sensorDataTables.length > 0) { %>
-        <ul>
-          <% for (let tableName of sensorDataTables) { %>
-          <li>
-            <%= tableName %>
-            <form action="/delete-sensor-table" method="POST" style="display: inline;">
-              <input type="hidden" name="tableName" value="<%= tableName %>">
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-          </li>
-          <% } %>
-        </ul>
-        <% } else { %>
-        <p>No sensor data tables found.</p>
-        <% } %>
-      </div>
-      <div class="col-sm-6">
-        <h2>Email Notification Tables</h2>
-        <% if (emailNotificationTables.length > 0) { %>
-        <ul>
-          <% for (let tableName of emailNotificationTables) { %>
-          <li>
-            <%= tableName %>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete-email-notifications-modal" data-table-name="<%= tableName %>">Delete Notifications</button>
-          </li>
-          <% } %>
-        </ul>
-        <% } else { %>
-        <p>No email notification tables found.</p>
-        <% } %>
-      </div>
-    </div>
-    <div class="modal fade" id="delete-email-notifications-modal" tabindex="-1" aria-labelledby="delete-email-notifications-modal-label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="delete-email-notifications-modal-label">Delete Email Notifications</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 mx-auto ">
+          <div class="card mt-3">
+            <div class="card-body text-center">
+              <h2>Sensor Data Tables</h2>
+              <% if (sensorDataTables.length > 0) { %>
+              <ul>
+                <% for (let tableName of sensorDataTables) { %>
+                <ul>
+                  <%= tableName %>
+                  <form action="/delete-sensor-table" method="POST" style="display: inline;">
+                    <input type="hidden" name="tableName" value="<%= tableName %>">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                </ul>
+                <% } %>
+              </ul>
+              <% } else { %>
+              <p>No sensor data tables found.</p>
+              <% } %>
             </div>
-            <div class="modal-body">
-              <form id="delete-email-notifications-form" method="POST">
-                <input type="hidden" name="tableName" id="email-table-name-input">
-      
-                <!-- Add a table to display the email notifications -->
-                <div class="table-responsive">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">Select</th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Email</th>
-                      </tr>
-                    </thead>
-                    <tbody id="email-notifications-table-body">
-                      <!-- Add rows to display the email notification data -->
-                    </tbody>
-                  </table>
-                </div>
-      
-                <button type="button" id="delete-email-notifications-btn" class="btn btn-danger">Delete Selected</button>
-              </form>
+          </div>
+        </div>
+        <div class="col-sm-6 mx-auto">
+          <div class="card mt-3">
+            <div class="card-body text-center">
+              <h2>Email Notifications</h2>
+              <% if (emailNotificationTables.length > 0) { %>
+              <ul>
+                <% for (let tableName of emailNotificationTables) { %>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete-email-notifications-modal" data-table-name="<%= tableName %>">Manage Notifications</button>
+                <% } %>
+              </ul>
+              <% } else { %>
+              <p>No email notification tables found.</p>
+              <% } %>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="modal fade" id="delete-email-notifications-modal" tabindex="-1" aria-labelledby="delete-email-notifications-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete-email-notifications-modal-label">Delete Email Notifications</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="delete-email-notifications-form" method="POST">
+              <input type="hidden" name="tableName" id="email-table-name-input">
+    
+              <!-- Add a table to display the email notifications -->
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Select</th>
+                      <th scope="col">ID</th>
+                      <th scope="col">Email</th>
+                    </tr>
+                  </thead>
+                  <tbody id="email-notifications-table-body">
+                    <!-- Add rows to display the email notification data -->
+                  </tbody>
+                </table>
+              </div>
+    
+              <button type="button" id="delete-email-notifications-btn" class="btn btn-danger">Delete Selected</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
       <script>
         $(function () {
           // Add event listener to the modal show event
