@@ -97,10 +97,22 @@ app.post('/register', (req, res) => {
 
 // Admin registration page
 app.get('/admin-register', function(req, res) {
-  if (req.session.username) {
-    res.render('pages/admin-register', {loggedIn: true});
-  } else {
-    res.render('pages/admin-register', {loggedIn: false});
+  if (req.session.username & req.session.isAdmin) {
+    res.render('pages/admin-register', {
+      loggedIn: true,
+      isAdmin: true
+    });
+  } else if (req.session.username){
+    res.render('pages/admin-register', {
+      loggedIn: true,
+      isAdmin: false
+    });
+  }
+  else {
+    res.render('pages/admin-register', {
+      loggedIn: true,
+      isAdmin: false
+    });
   }
 });
 
