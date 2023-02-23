@@ -86,7 +86,7 @@ Bootstrap      CSS framework for responsive front end development
 ## 2 System Architecture
 
 ### 2.1 Architecture Diagram:
-
+![System Architecture!](arch.png "Architecture")
 
 ### 2.2 Embedded Javascript (EJS)
 
@@ -144,6 +144,8 @@ is required to take into account the current CPU temperature.
 ## 3. High-Level Design
 
 ### 3.1 Data Flow Diagram
+
+![Data Flow Diagram!](DFS.png "DFS")
 
 In the Data Flow Diagram above, it shows how the user would interact with the
 frontend through a browser. It then shows systems interacting with one another when
