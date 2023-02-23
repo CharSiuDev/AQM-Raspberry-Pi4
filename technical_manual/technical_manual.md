@@ -1,11 +1,16 @@
 # CA326 Technical Manual/Specification
 Project Title: Air Quality Monitor via Raspberry Pi
+<br>
 Student Names:
+<br>
 Ronghui Lin 
 Student ID: 19354553
- Vaidas Buzas 
+<br>
+Vaidas Buzas 
 Student ID: 19322426
+<br>
 Supervisor: Renaat Verbruggen
+<br>
 ## Table of Contents 
 - 1 Introduction
    - 1.2 Glossary
@@ -51,41 +56,31 @@ Term           Definition
 UI             User Interface
 ```
 ```
-JSON           Javascript Object Notation, a file format
-for data interchange
+JSON           Javascript Object Notation, a file format for data interchange
 ```
 ```
 EJS            Embedded JavaScript
 ```
 ```
-SMTP           Simple Mail Transfer Protocol, used by
-servers to send, receive or relay
-outgoing mail.
+SMTP           Simple Mail Transfer Protocol, used by servers to send, receive or relay outgoing mail.
 ```
 ```
-CSV            Comma-Separated Values file is a text
-file that uses a comma to separate
-values.
+CSV            Comma-Separated Values file is a text file that uses a comma to separate values.
 ```
 ```
-CPU            Central Processing Unit, the brain of the
-computer that does all the calculations.
+CPU            Central Processing Unit, the brain of the computer that does all the calculations.
 ```
 ```
-Frontend       What is displayed to the user on a
-website.
+Frontend       What is displayed to the user on a website.
 ```
 ```
-Backend        Where all the processing and
-calculations occur behind the scenes.
+Backend        Where all the processing and calculations occur behind the scenes.
 ```
 ```
-Middleware     Functions in NodeJSthat have access to
-request and response objects
+Middleware     Functions in NodeJSthat have access to request and response objects
 ```
 ```
-Bootstrap      CSS framework for responsive front end
-development
+Bootstrap      CSS framework for responsive front end development
 ```
 
 ## 2 System Architecture
@@ -243,30 +238,53 @@ to work and run cohesively.
 ### 5.1 Download and Installation
 
 Please install NodeJS first HERE:
+<br>
 https://nodejs.org/en/
+<br>
 After installation, open up Command Line and run “npm install DEPENDENCY”
+<br>
 Replace DEPENDENCY with each dependency listed below:
+<br>
 Dependencies Server Side:
+<br>
 ● ExpressJS
+<br>
 ● npm
+<br>
 ● SQLite
+<br>
 ● Express Session
+<br>
 ● BCrypt
+<br>
 ● Dotenv
+<br>
 ● Nodemailer
+<br>
 ● EJS
+<br>
 ● NodeJS
+<br>
 ● Bootstrap
+<br>
 ● JQuery
+<br>
 ● Chartjs
+<br>
 ● Chartjs Annotation
+<br>
 Dependencies Data Collection side (Raspberry Pi)
+<br>
 ● Clone the github repository
+<br>
 ● https://gitlab.computing.dcu.ie/linr2/2023-ca326-ThirdYearProject
+<br>
 ● Run install.sh
+<br>
 This should install most if not all dependencies.
-
+<br>
 Clone the repository to the device you want to act as server.
+<br>
 Then,
 
 1. Change Directory to the Website directory
