@@ -28,3 +28,42 @@ NodeJS is the server that handles all the backend processing of data and request
 
 The data collection layer consists of the Raspberry Pi nodes with their sensors connected. The program to collect the data from the sensors and package them into a dictionary is written in python and is then sent to the NodeJS backend where it is stored according to the name set for the payload. Calibration of the data collected is also processed on the Pi, for example the compensated CPU temperature, this is required as the temperature sensor is close to the CPU, as such a maths calculation is required to take into account the current CPU temperature.
 
+## 5.1 Download and Installation
+
+Please install NodeJS first [HERE](https://nodejs.org/en/download/).
+
+After installation, open up Command Line and run `npm install DEPENDENCY`.
+
+Replace DEPENDENCY with each dependency listed below:
+
+#### Dependencies Server Side:
+- ExpressJS
+- npm
+- SQLite3
+- Express Session
+- BCrypt
+- Dotenv
+- Nodemailer
+- EJS
+- NodeJS
+- Bootstrap
+- JQuery
+- Chartjs
+- Chartjs Annotation
+
+#### Dependencies Data Collection side (Raspberry Pi)
+- Clone the github repository
+  `https://gitlab.computing.dcu.ie/linr2/2023-ca326-ThirdYearProject`
+- Run `install.sh`. This should install most if not all dependencies.
+
+Clone the repository to the device you want to act as server.
+
+Then, 
+- Change Directory to the Website directory
+- Type and run this command, `node server.js`
+- Server should be up and running.
+
+On the Raspberry Pi end, 
+- Make sure you’re using the latest stable Raspberry Pi OS.
+- Once the repo has been cloned, change directory to the root directory where start.py is located.
+- Run this command `python3 start.py`.
