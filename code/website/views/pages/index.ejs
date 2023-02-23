@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('../partials/head'); %>
+  <title>Sensor Data</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <style>
+    .bg-image {
+      background-image: url('/images/pi4keyboardbackground.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .btn-primary {
+      z-index: 1;
+    }
+
+    h1 {
+      font-weight: bold;
+      font-family: fantasy;
+    }
+
+    .image-box {
+      width: 30%;
+      margin-right: 5%;
+    }
+
+    .text-box {
+      width: 65%;
+    }
+  </style>
+</head>
+<header>
+  <%- include('../partials/header'); %>
+</header>
+<body>
+  <div class="container-fluid p-0 bg-image">
+    <div class="text-white">
+      <h1 class="display-4">Air Quality Monitor via Raspberry Pi</h1>
+      <a href="/about" class="btn btn-primary btn-lg mt-3">Read more</a>
+    </div>
+  </div>
+  <main>
+  <div style="text-align:center; border: 0px solid black; padding: 60px;">
+      <h1>Raspberry Pi Model 4B</h1>
+  </div>
+  <div style="display: flex; flex-wrap: wrap;">
+  <div class="container-fluid mt-5" style="flex: 1 1 50%; border: 0px solid black; padding-left: 220px; padding-right: 20px; padding-bottom: 20px;">
+    <div class="row">
+      <div class="col-md-4 image-box">
+        <img src="/images/pi4modelb.png" class="img-fluid rounded" alt="Image 1">
+      </div>
+      <div class="col-md-8 text-box" style="flex: 1 1 50%; border: 0px solid black; padding-right: 220px; padding-left: 220px; padding-bottom: 20px;">
+        The Model 4B was chosen due to various factors we considered:
+        <ul>
+          <li><Strong>Processing Power:</Strong> Its quad core processor makes it powerful enough to handle the complex calculations and data processing required.</li>
+          <li><Strong>Connectivity:</Strong> This model has both WIFI and Bluetooth Connectivity, which makes it easy to connect to remotely and if required it can connect to other devices for monitoring.</li>
+          <li><Strong>GPIO Pins:</Strong> The Pi has General Purpose Input/Output (GPIO) pins, allowing it to easily connect to sensors and other peripherals according to our requirements.</li>
+          <li><Strong>Low Cost:</Strong> The Pi 4's low RRP starting from just 35 euro for the 1GB variant, up to 80 for the 8GB variant.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+  <div style="text-align:center; border: 0px solid black; padding: 60px;">
+    <h1>Enviro+</h1>
+</div>
+<div style="display: flex; flex-wrap: wrap;">
+<div class="container-fluid mt-5" style="flex: 1 1 50%; border: 0px solid black; padding-left: 220px; padding-right: 20px; padding-bottom: 20px;">
+  <div class="row">
+    <div class="col-md-4 image-box">
+      <img src="/images/enviroplus.png" class="img-fluid rounded" alt="Image 1">
+    </div>
+    <div class="col-md-8 text-box" style="flex: 1 1 50%; border: 0px solid black; padding-right: 220px; padding-left: 220px; padding-bottom: 20px;">
+      The Enviro+ was used as it contains various features useful for this project:
+      <ul>
+        <li><Strong>Sensors:</Strong> It includes multiple sensors for detecting Particulate matter, various gases, temperature, humidity, barometric pressure and ambient light levels..</li>
+        <li><Strong>Plantower PMS5003:</Strong> This sensor is used to detect particles as small as 0.3 microns in diameter, which is ideal for monitoring indoor and outdoor enviroments.</li>
+        <li><Strong>Bosch BME680 Gas Sensor:</Strong> This sensor detects multiple common air pollutants, including Nitrogen Dioxide, Ammonia and other volatile organic compounds.</li>
+        <li><Strong>Bosch BME280 Temperature & Humidity Sensor:</Strong> This temperature sensor provides accurate readings for temperature and humidity levels for both outdoors and indoors.</li>
+        <li><Strong>History of Use:</Strong> Research showed that these sensors are reliable enough to be used by Sensor.Community (previously Luftdaten.info) in order to crowd source global pollution levels from volunteers.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div>
+</main>
+  </main>
+
+  <footer class="text-center fixed-bottom ">
+    <%- include('../partials/footer'); %>
+  </footer>
+</body>
+</html>

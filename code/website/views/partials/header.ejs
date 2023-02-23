@@ -1,0 +1,183 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-custom d-flex justify-content-center">
+  <a class="btn btn-primary btn-floating m-1" style="background-color: #333333; border-radius: 50%; width: 50px; height: 50px; background-image: url('/images/github.png'); background-size: cover; border: none;" href="https://gitlab.computing.dcu.ie/linr2/2023-ca326-ThirdYearProject" role="button"></a>  <a class="navbar-brand text-right" href="/">Air Quality Monitor</a>
+  <ul class="navbar-nav d-flex justify-content-between align-items-center text-center w-50">
+    <li class="nav-item">
+      <div class="btn-group" role="group">
+        <a class="btn btn-primary btn-colour" href="/about">About</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <div class="dropdown">
+        <button class="btn btn-primary btn-colour dropdown-toggle" type="button" id="sensorDataDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Select Sensor Data
+        </button>
+        <div class="dropdown-menu" aria-labelledby="sensorDataDropdownButton" id="sensor-data-dropdown-menu">
+          <a class="dropdown-item" href="#" data-table-name="">Loading sensor data tables...</a>
+        </div>
+      </div>
+    </li>
+    <% if (loggedIn) { %>
+    <li>
+      <button id="create-notification-button" class="btn btn-primary btn-colour">Create Notification</button>
+    </li>
+    <% } %>
+    <% if (loggedIn && isAdmin) { %>
+      <li class="nav-item">
+        <div class="btn-group" role="group">
+          <a class="btn btn-primary btn-colour" href="/admin-dashboard">Admin Dashboard</a>
+        </div>
+      </li>
+    <% } %>
+    <% if (loggedIn) { %>
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-primary btn-colour dropdown-toggle" type="button" id="sensorDataDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Sensor for Export
+          </button>
+          <div class="dropdown-menu" aria-labelledby="sensorDataDropdownButton" id="sensor-data-export-menu">
+            <a class="dropdown-item" href="#" data-table-name="">Loading sensor data tables...</a>
+          </div>
+        </div>
+      </li>
+    <% } %>
+    <li class="nav-item">
+      <% if (loggedIn) { %>
+        <div class="btn-group" role="group">
+          <a class="btn btn-primary btn-colour" href="/logout">Logout</a>
+        </div>
+      <% } else { %>
+        <li class="nav-item">
+          <div class="btn-group" role="group">
+            <a class="btn btn-primary btn-colour" href="/register">Register</a>
+            <a class="btn btn-primary btn-colour" href="/login">Login</a>
+          </div>
+        </li>
+      <% } %>
+    </li>
+  </ul>
+  <div class="modal fade" id="exportErrorModal" tabindex="-1" role="dialog" aria-labelledby="exportErrorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exportErrorModalLabel">Export Error</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          An error occurred while exporting data.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+  function populateSensorDataDropdown(sensorDataTables) {
+  const dropdownMenu = document.getElementById('sensor-data-dropdown-menu');
+
+  // Remove all existing options from the dropdown menu
+  while (dropdownMenu.firstChild) {
+    dropdownMenu.removeChild(dropdownMenu.firstChild);
+  }
+
+  // Add options to the dropdown menu for each sensor data table
+  sensorDataTables.forEach(tableName => {
+    const option = document.createElement('option');
+    option.value = tableName;
+    option.text = tableName;
+    option.setAttribute('data-table-name', tableName);
+    dropdownMenu.appendChild(option);
+  });
+
+  // Attach an event listener to the dropdown menu to handle option selection
+  dropdownMenu.addEventListener('click', (event) => {
+    const tableName = event.target.value;
+    if (tableName) {
+      location.href = '/data?tableName=' + tableName;
+    }
+  });
+}
+
+</script>
+
+<script>
+  function populateSensorExportDropdown(sensorDataTables) {
+  const dropdownMenu = document.getElementById('sensor-data-export-menu');
+
+  // Remove all existing options from the dropdown menu
+  while (dropdownMenu.firstChild) {
+    dropdownMenu.removeChild(dropdownMenu.firstChild);
+  }
+
+  // Add options to the dropdown menu for each sensor data table
+  sensorDataTables.forEach(tableName => {
+    const option = document.createElement('option');
+    option.value = tableName;
+    option.text = tableName;
+    option.setAttribute('data-table-name', tableName);
+    dropdownMenu.appendChild(option);
+  });
+
+  // Attach an event listener to the dropdown menu to handle option selection
+  dropdownMenu.addEventListener('click', (event) => {
+    const tableName = event.target.value;
+    if (tableName) {
+      location.href = '/export?tableName=' + tableName;
+    }
+  });
+}
+</script>
+
+<script>
+  fetch('/sensor-data-tables')
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Failed to fetch sensor data tables');
+    }
+  })
+  .then(sensorDataTables => {
+    // Populate the dropdown menu with the fetched sensor data tables
+    populateSensorDataDropdown(sensorDataTables);
+    populateSensorExportDropdown(sensorDataTables);
+  })
+  .catch(error => {
+    console.error(error);
+    // Handle the error here
+  });
+</script>
+
+
+<style>
+  .dropdown-menu .dropdown-item {
+  color: #470f00 !important;
+  background-color: #6b1801c5 !important;
+}
+  .btn-colour{
+    background-color: #470f00;
+    border: none;
+  }
+
+  .btn-colour:hover{
+    background-color: #6b1801c5;
+  }
+
+  .bg-custom {
+    background-color: #a44a3f;
+  }
+  .navbar-brand, .nav-link {
+  color: #FFFFFF;
+  }
+  .navbar-brand, .nav-link {
+  font-family: Arial, sans-serif;
+  }
+  .navbar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <title>About</title>
+    <%- include('../partials/head'); %>
+  </head>
+  <header>
+    <%- include('../partials/header'); %>
+  </header>
+  <body>
+    <header style="text-align:center;">
+     <div style="border: 0px solid black; padding: 60px;">
+      <h1>About Our Air Quality Monitor</h1>
+     </div>
+    </header>
+    <main>
+     <div style="display: flex; flex-wrap: wrap;">
+       <div style="flex: 1 1 50%; border: 0px solid black; padding-left: 220px; padding-right: 20px; padding-bottom: 20px;">
+         <section>
+           <h2>Our Goal</h2>
+           <p>We provide real-time data on temperature, pressure, humidity, light, and air quality, including levels of nitrogen dioxide, carbon monoxide, ammonia, and particulate matter (PM1, PM2.5, and PM10). Our goal is to help individuals and organizations make informed decisions about their health and safety in different environments.</p>
+           <h2>The Dangers of Poor Air Quality</h2>
+           <p>Poor air quality can have serious effects on human health, including respiratory problems, cardiovascular disease, and cancer. Nitrogen dioxide, carbon monoxide, and ammonia are all harmful pollutants that can cause a range of health problems, especially when exposure is prolonged or at high levels. Particulate matter, which includes PM1, PM2.5, and PM10, can also be dangerous, as it can enter the lungs and cause respiratory problems. Our monitoring systems provide real-time data on these pollutants, allowing individuals and organizations to take action to protect themselves and those around them.</p>
+         </section>
+       </div>
+       <div style="flex: 1 1 50%; border: 0px solid black; padding-right: 60px; padding-left: 20px; padding-bottom: 20px;">
+         <img src="https://www.thedrive.com/content/2020/11/White-Smoke-From-Exhaust-4.jpg?quality=85" alt="Image 1" style="width: 80%; height: auto; border-radius: 10px;">
+       </div>
+       <div style="flex: 1 1 50%; border: 0px solid black; padding-left: 220px; padding-right: 20px; padding-bottom: 20px;">
+         <img src="https://arctichc.com/wp-content/uploads/2020/04/Carbon-Monoxide-1024x772.jpeg" alt="Image 2" style="width: 80%; height: auto; border-radius: 10px;">
+       </div>
+       <div style="flex: 1 1 50%; border: 0px solid black; padding-right: 60px; padding-left: 20px; padding-bottom: 20px;" >
+         <section>
+           <h2>Environmental Factors We Monitor</h2>
+           <p>Our monitoring systems track the following environmental factors:</p>
+           <ul>
+             <li>Temperature</li>
+             <li>Pressure</li>
+             <li>Humidity</li>
+             <li>Light</li>
+             <li>Nitrogen dioxide (NO2)</li>
+             <li>Carbon monoxide (CO)</li>
+             <li>Ammonia (NH3)</li>
+             <li>Particulate matter 1 (PM1)</li>
+             <li>Particulate matter 2.5 (PM2.5)</li>
+             <li>Particulate matter 10 (PM10)</li>
+           </ul>
+         </section>
+       </div>
+       <div style="flex: 1 1 50%; border: 0px solid black; padding-left: 220px; padding-right: 20px; padding-bottom: 20px;">
+         <section>
+           <h2>Graphs</h2>
+            <p>Below are examples of the ten graphs we provide, with information about the levels of each pollutant and how they can affect human health:</p>
+            <ul>
+              <li><strong>Temperature:</strong> High temperatures can cause heat stroke, dehydration, and other health problems, while low temperatures can lead to hypothermia and other cold-related illnesses.</li>
+              <li><strong>Pressure:</strong> Changes in air pressure can cause headaches, dizziness, and other symptoms, especially for those with certain health conditions.</li>
+              <li><strong>Humidity:</strong> High humidity can make it harder to breathe and can exacerbate respiratory problems, while low humidity can cause dry skin, nosebleeds, and other issues.</li>
+              <li><strong>Light:</strong> Exposure to bright or artificial light can disrupt sleep and circadian rhythms, while lack of light can cause seasonal affective disorder and other mood disorders.</li>
+              <li><strong>Nitrogen dioxide (NO2):</strong> Exposure to high levels of NO2 can cause respiratory problems, especially in children and those with pre-existing health conditions.</li>
+              <li><strong>Carbon monoxide (CO):</strong> CO is a colorless, odorless gas that can cause headaches, dizziness, nausea, and other symptoms at low levels, and can be deadly at higher levels. It can also exacerbate heart and lung problems, and is especially dangerous in enclosed or poorly ventilated spaces. </li>
+              <li><strong>Ammonia (NH3):</strong> Exposure to high levels of ammonia can cause irritation and damage to the eyes, nose, throat, and respiratory system, and can also exacerbate asthma and other respiratory problems.</li>
+              <li><strong>Particulate matter 1 (PM1), 2.5 (PM2.5), and 10 (PM10):</strong> These tiny particles can enter the lungs and cause respiratory problems, including asthma, bronchitis, and even lung cancer. They can also exacerbate heart and lung problems and other health issues.</li>
+            </ul>
+            <p>Our monitoring systems provide real-time data on all of these factors, allowing individuals and organizations to take action to reduce their exposure and protect their health and well-being.</p>
+         </section>
+       </div>
+       <div style="flex: 1 1 50%; border: 0px solid black; padding-right: 60px; padding-left: 20px; padding-bottom: 20px;">
+         <img src="https://www.epa.gov/sites/default/files/2016-09/pm2.5_scale_graphic-color_2.jpg" alt="Image 3" style="width: 80%; height: auto; border-radius: 10px;">
+       </div>
+      </div>
+    </main>          
+    <footer class="text-center fixed-bottom ">
+        <%- include('../partials/footer'); %>
+    </footer>
+  </body>
+</html>

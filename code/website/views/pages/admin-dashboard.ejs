@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <title>About</title>
+    <%- include('../partials/head'); %>
+  </head>
+  <header>
+    <%- include('../partials/header'); %>
+  </header>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 mx-auto ">
+          <div class="card mt-3">
+            <div class="card-body text-center">
+              <h2>Sensor Data Tables</h2>
+              <% if (sensorDataTables.length > 0) { %>
+              <ul>
+                <% for (let tableName of sensorDataTables) { %>
+                <ul>
+                  <%= tableName %>
+                  <form action="/delete-sensor-table" method="POST" style="display: inline;">
+                    <input type="hidden" name="tableName" value="<%= tableName %>">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                </ul>
+                <% } %>
+              </ul>
+              <% } else { %>
+              <p>No sensor data tables found.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 mx-auto">
+          <div class="card mt-3">
+            <div class="card-body text-center">
+              <h2>Email Notifications</h2>
+              <% if (emailNotificationTables.length > 0) { %>
+              <ul>
+                <% for (let tableName of emailNotificationTables) { %>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete-email-notifications-modal" data-table-name="<%= tableName %>">Manage Notifications</button>
+                <% } %>
+              </ul>
+              <% } else { %>
+              <p>No email notification tables found.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="delete-email-notifications-modal" tabindex="-1" aria-labelledby="delete-email-notifications-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete-email-notifications-modal-label">Delete Email Notifications</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="delete-email-notifications-form" method="POST">
+              <input type="hidden" name="tableName" id="email-table-name-input">
+    
+              <!-- Add a table to display the email notifications -->
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Select</th>
+                      <th scope="col">ID</th>
+                      <th scope="col">Email</th>
+                    </tr>
+                  </thead>
+                  <tbody id="email-notifications-table-body">
+                    <!-- Add rows to display the email notification data -->
+                  </tbody>
+                </table>
+              </div>
+    
+              <button type="button" id="delete-email-notifications-btn" class="btn btn-danger">Delete Selected</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+      <script>
+        $(function () {
+          // Add event listener to the modal show event
+          $('#delete-email-notifications-modal').on('show.bs.modal', function (event) {
+            // Get the button that triggered the modal
+            var button = $(event.relatedTarget);
+      
+            // Get the email notification table name from the button data attribute
+            var tableName = button.data('table-name');
+      
+            // Set the email notification table name input value in the form
+            $('#email-table-name-input').val(tableName);
+      
+            // Send an AJAX request to retrieve the email notifications data and populate the table rows
+            $.post('/get-email-notifications', { tableName: tableName }, function (data) {
+              $('#email-notifications-table-body').html(data);
+            });
+          });
+      
+          // Add event listener to the delete button click event
+          $('#delete-email-notifications-btn').click(function () {
+            // Submit the delete form when the button is clicked
+            $('#delete-email-notifications-form').attr('action', '/delete-email-notifications');
+            $('#delete-email-notifications-form').submit();
+          });
+        });
+      </script>
+
+  <footer class="text-center fixed-bottom ">
+    <%- include('../partials/footer'); %>
+  </footer>
+  </body>
+</html>
