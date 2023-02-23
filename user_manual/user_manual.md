@@ -80,37 +80,67 @@ start.py is located.
 ## 2. End User Guide:
 ### 2.1 Regular User Guide
 
-Prerequisites:
+#### 1. Prerequisites:
 Use a modern supported browser e.g Firefox, Chrome, Edge, Opera.
 <br>
-Homepage:
+
+#### Home page:
 The main landing page is here, you should be able to see a navigation bar at the stop allowing you to select sensor nodes, register or sign up.
 ![Home page!](Home.png "Home")
 <br>
+
+#### About:
 By clicking on Read More or on the About button in the navigation bar, it will redirect you to some background information about this project.
 ![About!](AboutPage.png "About")
 
 <br>
+
+#### Sensor Data:
+
 Press Select Sensor Data, a drop down menu should appear displaying all available options to choose.
+
 ![Sensor Selection!](SelectSensor.png "Sensor")
+
 <br>
+
 Once selected, you should be redirected to the data page where all the available data from the node is charted and updated in real time.
+
 ![Data!](DataPage.png "Data")
 <br>
+
+#### Registration:
+
 These are the only available features for an unregistered guest user, if you wish to become registered, please press the register button at the navigation bar.
 <br> Here you should be redirected to our registration page where you can sign up.
+
 ![Registration!](RegisterPage.png "Register")
+
 <br>
+
+#### Login:
+
 After signing up, you should navigate to the Login page where you can input the details you just signed up with.
 ![Login page!](LoginPage.png "Login")
-<br> Upon logging in, you will now see that the navigation bar at the top has changed and various features have been added.
+<br> 
+
+#### Navigation Bar Update:
+
+Upon logging in, you will now see that the navigation bar at the top has changed and various features have been added.
 ![Navbar!](navbar.png "navbar")
+
+#### Notification Creation:
+
 <br> To use these features, please return to the where the sensor data is charted, then press on the Create Notification button, this UI should appear after.
+
 ![notification!](notification.png "notification")
 <br>
 This notification pop up allows you to select which sensor node to create a notification for and which values to monitor by ticking the boxes and inputting a threshold number.
 <br>
+
+#### Export:
+
 Next we have the export button, upon pressing the export button you will be greeted with options to choose which node you want to export data from. Once selected it will output the data to .CSV format.
+
 ![Export!](export.png "Export")
 <br>
 
@@ -136,10 +166,3 @@ Then page should then appear.
 You will see two options, on th left it displays all the sensor data tables in the system and by clicking delete will remove them from being able to be viewed.
 On the right Manage Notifications will appear, allowing you to see a pop up with the ability to select multiple notifications to delete via checkbox and displaying the ID and which email it belongs to.
 ![Manage Email!](manageemail.png "manage email")
-
-
-
-
-
-
-
