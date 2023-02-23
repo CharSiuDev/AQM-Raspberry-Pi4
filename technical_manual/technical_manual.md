@@ -275,6 +275,16 @@ Dependencies Server Side:
 <br>
 ● Chartjs Annotation
 <br>
+After that is complete, please navigate to the code/website directory where you need to create an enviroment file (.env).
+<br>
+Please use this template for the .env file and fill in the "CHANGE" text with your own details as necessary.
+
+```
+EMAIL_USERNAME=CHANGE
+EMAIL_PASSWORD=CHANGE
+ADMIN_REGISTRATION_CODE=CHANGE
+```
+<br>
 Dependencies Data Collection side (Raspberry Pi)
 <br>
 ● Clone the github repository
