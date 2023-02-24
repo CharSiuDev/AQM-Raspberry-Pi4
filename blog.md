@@ -67,6 +67,9 @@ Date: January, 10th-27th, 2023
 - Added bootstrap to index.html.
 - Added email notifications.
 
+As we moved into the new year, our focus shifted to improving the functionality and user experience of our web application. We began by adding an install.sh file to our repository, which simplified the installation process for users. We also added a config.cfg file, which contained configuration variables for our application.
+We continued to work on our server.js file, which served as the backbone of our backend server. With this file, we were able to display sensor data on graphs on the website, and we also added email notifications to alert users when certain thresholds were exceeded.
+In our meeting with our supervisor, we discussed our progress and received feedback on our work thus far. We continued to make improvements, including adding bootstrap to our index.html file for improved styling, and creating an admin dashboard for managing sensor nodes and notifications.
 
 # Progress Update
 Date: February, 1st-23rd 2023
@@ -85,6 +88,9 @@ Date: February, 1st-23rd 2023
 - Made User manual.
 - Made video walkthrough.
 
+As we moved into February, we focused on unit testing our JavaScript code, fixing bugs, and refactoring our start.py file. We also added the ability for admins to delete notifications and to add sensors to the system. We researched and obtained realistic danger figures for each sensor to better inform users of potential hazards.
+To improve the user experience of our web application, we added an about page and applied CSS styling to various pages. We also created a technical manual, a user manual, and a video walkthrough to help users understand how to use our application.
+Overall, our work during these months was focused on building a functional and user-friendly web application, while also gathering and implementing feedback from our supervisor.
 
 
 
