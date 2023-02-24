@@ -7,6 +7,12 @@ Date: Monday, October 17th-26th, 2022
 - Set up the repository and added the proposal to it.
 - After supervisor accepted proposal, order was placed for Raspberry Pi and associated sensors.
 
+At the start of our project, we spent a lot of time researching potential ideas and identifying a problem that we wanted to solve. We wanted to create a project that was impactful, practical, and could make a difference in people's lives.
+After several brainstorming sessions and discussions, we identified environmental monitoring as an area that we wanted to focus on. We were inspired by the idea of using technology to address environmental issues and contribute to sustainability efforts.
+After conducting extensive research and gathering feedback, we developed a proposal for our project and submitted it to our supervisor for review. This proposal outlined our vision, goals, and objectives for the project, as well as our plan for implementation and development.
+Once our proposal was accepted, we set up a repository and began working on the development of our web application. We spent a lot of time in the initial stages of development setting up our infrastructure, testing our sensors, and drafting scripts to gather and send data.
+Overall, the beginning stages of our project were focused on research, planning, and laying the foundation for our web application. This involved a lot of groundwork, but it was essential in ensuring that we had a solid foundation to build upon as we moved forward with the project.
+
 # Presentation Slides
 Date: November 1st-11th, 2022
 
@@ -54,13 +60,17 @@ After the in depth research period, we came to the conclusion of:
 - EJS would be used as it is much more similar to HTML than other templating engines such as PUG.
 
 # Progress Update
-Date: January, 10th-27th, 2023
+Date: January, 10th-15th, 2023
 
 - Added install.sh to repository.
 - Added config.cfg to repository.
 - Added app.js to repository.
 - Added start.py to repository.
 - Added html and ejs files to repository.
+
+# Progress Update
+Date: January 15th-26th, 2023
+
 - Created backend server.
 - Manged to display sensor data on graphs on the website.
 - Had a meeting with our supervisor to check progress.
@@ -72,7 +82,7 @@ We continued to work on our server.js file, which served as the backbone of our 
 In our meeting with our supervisor, we discussed our progress and received feedback on our work thus far. We continued to make improvements, including adding bootstrap to our index.html file for improved styling, and creating an admin dashboard for managing sensor nodes and notifications.
 
 # Progress Update
-Date: February, 1st-23rd 2023
+Date: February, 1st-10th, 2023
 
 - Split charts and added background colour for visibility.
 - Unit testing of JavaScript.
@@ -80,6 +90,10 @@ Date: February, 1st-23rd 2023
 - Added admin dashboard.
 - Refactored start.py.
 - Added sensor node and notification deletion by admins.
+
+#Progress Update
+Date: February, 11th-23rd, 2023
+
 - Finalizing graphs and admin for adding sensors.
 - Get realistic DANGER figures for each sensor.
 - Added an about page.
